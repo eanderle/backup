@@ -1,5 +1,6 @@
-gdrive/client_secrets.json
+*client_secrets.json
 gdrive/drive.dat
+sms/token
 
 *.swp
 
