@@ -65,6 +65,33 @@ gflags.DEFINE_boolean('debug', False, 'Log folder contents as being fetched' )
 gflags.DEFINE_string('logfile', 'drive.log', 'Location of file to write the log' )
 gflags.DEFINE_string('drive_id', 'root', 'ID of the folder whose contents are to be fetched' )
 
+# Download conversion configuration
+
+# CONVERT_DOCUMENT = 'text/html'
+# CONVERT_DOCUMENT = 'text/plain'
+# CONVERT_DOCUMENT = 'application/rtf'
+# CONVERT_DOCUMENT = 'application/pdf'
+CONVERT_DOCUMENT = 'application/vnd.oasis.opendocument.text'
+# CONVERT_DOCUMENT = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document
+
+# CONVERT_SPREADSHEET = 'application/pdf'
+CONVERT_SPREADSHEET = 'application/x-vnd.oasis.opendocument.spreadsheet'
+# CONVERT_SPREADSHEET = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+
+# CONVERT_DRAWING = 'image/jpeg'
+# CONVERT_DRAWING = 'image/png'
+# CONVERT_DRAWING = 'application/pdf'
+CONVERT_DRAWING = 'image/svg+xml'
+
+CONVERT_PRESENTATION = 'application/pdf'
+# CONVERT_PRESENTATION = 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+
+gdrive_mimes = {
+    'application/vnd.google-apps.document': CONVERT_DOCUMENT,
+    'application/vnd.google-apps.spreadsheet': CONVERT_SPREADSHEET,
+    'application/vnd.google-apps.drawing': CONVERT_DRAWING,
+    'application/vnd.google-apps.presentation': CONVERT_PRESENTATION,
+}
 
 def open_logfile():
     if not re.match( '^/', FLAGS.logfile ):
@@ -147,7 +174,7 @@ def download_file( service, drive_file, dest_path ):
     file_location = dest_path + drive_file['title'].replace( '/', '_' )
 
     if is_google_doc(drive_file):
-        download_url = drive_file['exportLinks']['application/pdf']
+        download_url = drive_file['exportLinks'][gdrive_mimes[drive_file['mimeType']]]
     else:
         download_url = drive_file['downloadUrl']
     if download_url:
