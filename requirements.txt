@@ -6,7 +6,7 @@ facebook-sdk==1.0.0-alpha
 gdata==2.0.17
 gmvault==1.8.1-beta
 google-api-python-client==1.2
-httplib2==0.8
+httplib2==0.19.0
 python-gflags==2.0
 requests==2.20.0
 urllib3==1.24.2
